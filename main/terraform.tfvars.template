@@ -1,0 +1,4 @@
+aws_region = "<aws_region>"
+aws_profile = "<aws_profile>"
+table_name = "chainlink"
+partition_key = "name"
