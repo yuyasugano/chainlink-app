@@ -9,3 +9,10 @@ lambda_function/*
 main/terraform.tfvars
 main/terraform_backend.tf
 main/.terraform/*
+ingest_sam/*
+!ingest_sam/lambda_function.py
+!ingest_sam/coingecko.py
+!ingest_sam/dynamodb.py
+!ingest_sam/event.json
+!ingest_sam/event2.json
+!ingest_sam/vars.json

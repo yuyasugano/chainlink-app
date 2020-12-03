@@ -1,0 +1,5 @@
+{
+  "IngestApplication": {
+    "TABLE_NAME": "chainlink"
+  }
+}
