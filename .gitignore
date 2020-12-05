@@ -16,3 +16,10 @@ ingest_sam/*
 !ingest_sam/event.json
 !ingest_sam/event2.json
 !ingest_sam/vars.json
+!ingest_sam/template.yaml
+apigw_sam/*
+!apigw_sam/lambda_function.py
+!apigw_sam/requirements.txt
+!apigw_sam/template.yaml
+!apigw_sam/vars.json
+apigw_sam/.aws-sam/*

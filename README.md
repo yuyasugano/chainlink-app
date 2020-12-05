@@ -21,7 +21,7 @@ terraform destroy # destroy
 ```
  
 ## sam version
-
+ 
 Ensure your `sam` version is as follows (some modifications would be required if you run other `sam` versions):
 ```sh
 $ pip install aws-sam-cli
@@ -40,7 +40,16 @@ vars.json
   }
 }
 ```
-  
+ 
+vars.json
+```
+{
+  "LambdaFunctionAPIGateway": {
+    "TABLE_NAME": "chainlink"
+  }
+}
+```
+ 
 ## setup steps
  
 1. Prepare S3 bucket to upload the code and generate a compiled version of the template `compiled.yml`. You need to manually create an S3 bucket or use an existing one to store the code.
@@ -56,11 +65,27 @@ sam package --template-file template.yaml --s3-bucket <Your S3 bucket> --output-
 sam deploy --template-file compiled.yaml --stack-name <Your stack name> --capabilities CAPABILITY_IAM --parameter-overrides TableName=<TABLE_NAME>
 ```
  
+```sh
+cd apigw_sam/
+aws s3 mb s3://<Your S3 bucket> --region <Your region>
+sam validate -t template.yaml
+sam package --template-file template.yaml --s3-bucket <Your S3 bucket> --output-template-file compiled.yaml
+sam deploy --template-file compiled.yaml --stack-name <Your stack name> --capabilities CAPABILITY_NAMED_IAM --parameter-overrides TableName=<TABLE_NAME>
+```
+ 
 ## local test
+Test an ingestion to DynamoDB
 ```sh
 sam local invoke IngestApplication --event event.json --region ap-northeast-1 --env-vars vars.json
 ```
   
+Test API Gateway invocation to DynamoDB
+```sh
+sam build
+sam local start-api -p 5000 -n vars.json
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:5000/test?key=bitcoin
+```
+ 
 ## License
 
 This library is licensed under the MIT License.

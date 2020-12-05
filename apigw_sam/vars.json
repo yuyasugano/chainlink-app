@@ -1,0 +1,5 @@
+{
+  "LambdaFunctionAPIGateway": {
+    "TABLE_NAME": "chainlink"
+  }
+}
