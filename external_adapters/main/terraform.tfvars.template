@@ -1,0 +1,7 @@
+aws_region = "<aws_region>"
+aws_profile = "<aws_profile>"
+table_name = "chainlink"
+table_name_minute = "chainlink_minute"
+table_name_hour = "chainlink_hour"
+table_name_day = "chainlink_day"
+partition_key = "name"

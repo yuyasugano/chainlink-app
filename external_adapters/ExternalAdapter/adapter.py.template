@@ -1,0 +1,67 @@
+import os
+from bridge import Bridge
+
+class Adapter:
+    base_url = 'https://'
+    n_params = ['n']
+    p_params = ['p']
+
+    def __init__(self, input):
+        self.id = input.get('id', '1')
+        self.request_data = input.get('data')
+        self.api_key = os.environ.get('CHAINLINK_ENV_PROD')
+        if self.validate_request_data():
+            self.bridge = Bridge()
+            self.set_params()
+            self.create_request()
+        else:
+            self.result_error('No data provided')
+
+    def validate_request_data(self):
+        if self.request_data is None:
+            return False
+        if self.request_data == {}:
+            return False
+        return True
+
+    def set_params(self):
+        for param in self.n_params:
+            self.n_param = self.request_data.get(param)
+            if self.n_param is not None:
+                break
+        for param in self.p_params:
+            self.p_param = self.request_data.get(param)
+            if self.p_param is not None:
+                break
+
+    def create_request(self):
+        try:
+            params = {
+                'n': self.n_param,
+                'p': self.p_param,
+            }
+            headers = {
+                'x-api-key': self.api_key
+            }
+            response = self.bridge.request(self.base_url, params, headers)
+            data = response.json()
+            self.result_success(data)
+        except Exception as e:
+            self.result_error(e)
+        finally:
+            self.bridge.close()
+
+    def result_success(self, data):
+        self.result = {
+            'jobRunID': self.id,
+            'data': data,
+            'statusCode': 200,
+        }
+
+    def result_error(self, error):
+        self.result = {
+            'jobRunID': self.id,
+            'status': 'errored',
+            'error': f'There was an error: {error}',
+            'statusCode': 500,
+        }
