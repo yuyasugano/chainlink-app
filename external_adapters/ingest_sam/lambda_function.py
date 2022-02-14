@@ -64,7 +64,7 @@ def lambda_handler(event, context):
     elif event['operation'] == 'ingest_m':
         vs_currency = 'usd'
         days = ['1']
-        windows = [3, 5, 20]
+        windows = [3, 5, 9, 20, 30]
         feature_names = ['return', 'sma', 'disparity']
         for t in tokens:
             for i, day in enumerate(days):
@@ -100,7 +100,7 @@ def lambda_handler(event, context):
     elif event['operation'] == 'ingest_h':
         vs_currency = 'usd'
         days = ['7']
-        windows = [3, 5, 20]
+        windows = [3, 5, 9, 20, 30]
         feature_names = ['return', 'sma', 'disparity']
         for t in tokens:
             for i, day in enumerate(days):
@@ -136,7 +136,7 @@ def lambda_handler(event, context):
     elif event['operation'] == 'ingest_d':
         vs_currency = 'usd'
         days = ['180']
-        windows = [3, 5, 20]
+        windows = [3, 5, 9, 20, 30, 50, 100, 200]
         feature_names = ['return', 'sma', 'disparity']
         for t in tokens:
             for i, day in enumerate(days):
