@@ -1,0 +1,7 @@
+{
+  "ChainlinkIngestApplication": {
+    "TABLE_NAME_MINUTE": "chainlink_minute",
+    "TABLE_NAME_HOUR": "chainlink_hour",
+    "TABLE_NAME_DAY": "chainlink_day"
+  }
+}
